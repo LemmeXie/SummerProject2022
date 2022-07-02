@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://debtOfferBrowse.caption"
+        focusComponent="debtOffersTable">
+    <data readOnly="true">
+        <collection id="debtOffersDc"
+                    class="com.company.bankinksp.entity.DebtOffer">
+            <fetchPlan extends="_base">
+                <property name="clientOffers" fetchPlan="_base"/>
+                <property name="debtOffers" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="debtOffersDl">
+                <query>
+                    <![CDATA[select e from DebtOffer e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="debtOffersTable" spacing="true">
+        <filter id="filter"
+                dataLoader="debtOffersDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="debtOffersTable"
+                    width="100%"
+                    dataContainer="debtOffersDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="clientOffers"/>
+                <column id="debtOffers"/>
+                <column id="debtSum"/>
+                <column id="paymentSchedule"/>
+                <column id="datePayment"/>
+                <column id="paymentSum"/>
+                <column id="bodySum"/>
+                <column id="interestSum"/>
+            </columns>
+            <simplePagination/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="debtOffersTable.create"/>
+                <button id="editBtn" action="debtOffersTable.edit"/>
+                <button id="removeBtn" action="debtOffersTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
