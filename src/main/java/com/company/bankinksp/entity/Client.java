@@ -6,6 +6,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Table(name = "CLIENT", indexes = {
@@ -21,8 +22,8 @@ public class Client {
     private String name;
 
     @NotNull
-    @Column(name = "PHONE_NUMBER", nullable = false, length = 20)
-    private String phoneNumber;
+    @Column(name = "PHONE_NUMBER", nullable = false)
+    private BigDecimal phoneNumber;
 
     @Column(name = "EMAIL", nullable = false)
     @NotNull
@@ -41,11 +42,11 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     private Bank bank;
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(BigDecimal phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPhoneNumber() {
+    public BigDecimal getPhoneNumber() {
         return phoneNumber;
     }
 
