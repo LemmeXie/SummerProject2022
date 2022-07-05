@@ -46,9 +46,9 @@
                     <textField id="debtSumField" property="debtSum"/>
                     <textField id="paymentScheduleField" property="paymentSchedule"/>
                     <dateField id="datePaymentField" property="datePayment"/>
-                    <textField id="paymentSumField" property="paymentSum"/>
-                    <textField id="bodySumField" property="bodySum"/>
-                    <textField id="interestSumField" property="interestSum"/>
+                    <textField id="paymentSumField" property="paymentSum" editable="false"/>
+                    <textField id="bodySumField" property="bodySum" editable="false"/>
+                    <textField id="interestSumField" property="interestSum" editable="false"/>
                 </column>
             </form>
         </scrollBox>
