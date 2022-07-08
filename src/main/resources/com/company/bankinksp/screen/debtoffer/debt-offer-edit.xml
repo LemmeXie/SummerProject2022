@@ -44,11 +44,13 @@
                         </actions>
                     </entityPicker>
                     <textField id="debtSumField" property="debtSum"/>
+                    <slider id="debtSumSlider"/>
                     <textField id="paymentScheduleField" property="paymentSchedule"/>
                     <dateField id="datePaymentField" property="datePayment"/>
                     <textField id="paymentSumField" property="paymentSum" editable="false"/>
                     <textField id="bodySumField" property="bodySum" editable="false"/>
                     <textField id="interestSumField" property="interestSum" editable="false"/>
+
                 </column>
             </form>
         </scrollBox>

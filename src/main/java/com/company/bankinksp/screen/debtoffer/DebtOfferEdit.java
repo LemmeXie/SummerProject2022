@@ -1,10 +1,7 @@
 package com.company.bankinksp.screen.debtoffer;
 
 import com.company.bankinksp.entity.Debt;
-import io.jmix.ui.component.DateField;
-import io.jmix.ui.component.EntityPicker;
-import io.jmix.ui.component.HasValue;
-import io.jmix.ui.component.TextField;
+import io.jmix.ui.component.*;
 import io.jmix.ui.screen.*;
 import com.company.bankinksp.entity.DebtOffer;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
@@ -42,53 +39,70 @@ public class DebtOfferEdit extends StandardEditor<DebtOffer> {
     @Autowired
     private DateField<LocalDate> datePaymentField;
 
-    @Subscribe("debtSumField")
-    public void onDebtSumFieldValueChange(HasValue.ValueChangeEvent<Double> event) { //поля изменяются при изменении основных параметров таких как сумма кредита
-        if (!(debtSumField.getValue() > debtOffersField.getValue().getLimit())) {
-            if (!debtSumField.isEmpty() && !debtOffersField.isEmpty() && !paymentScheduleField.isEmpty()) {
-                monthPayment = Maths.getPayment(debtSumField.getValue(), debtOffersField.getValue().getInterestRate(), paymentScheduleField.getValue());
-                monthInterestPayment = Maths.getInterestPayment(debtOffersField.getValue().getInterestRate(), debtSumField.getValue());
-                monthDebtPayment = monthPayment - monthInterestPayment;
-                paymentSumField.setValue(monthPayment);
-                bodySumField.setValue(monthDebtPayment);
-                interestSumField.setValue(monthInterestPayment);
-            }
-        }
-        else
-        {
-            //todo здесь бы алерт возвращать, пока не знаю как
+    @Autowired
+    private Slider<Number> debtSumSlider;
+
+    @Subscribe("debtSumSlider")
+    public void onDebtSumSliderValueChange(HasValue.ValueChangeEvent<Number> event) {
+        debtSumField.setValue(debtSumSlider.getValue().doubleValue());
+        //ниже код: мы заполняем поля подсчета ежемесячных выплат
+        if (!debtSumSlider.isEmpty() && !debtOffersField.isEmpty() && !paymentScheduleField.isEmpty()) {
+            monthPayment = Maths.getPayment(debtSumField.getValue(), debtOffersField.getValue().getInterestRate(), paymentScheduleField.getValue());
+            monthInterestPayment = Maths.getInterestPayment(debtOffersField.getValue().getInterestRate(), debtSumField.getValue());
+            monthDebtPayment = monthPayment - monthInterestPayment;
+            paymentSumField.setValue(monthPayment);
+            bodySumField.setValue(monthDebtPayment);
+            interestSumField.setValue(monthInterestPayment);
         }
     }
 
-    //todo сделать невозможным ввод суммы кредита выше лимита, вроде пока всё
+    @Subscribe("debtSumField")
+    public void onDebtSumFieldValueChange(HasValue.ValueChangeEvent<Double> event) { //поля изменяются при изменении основных параметров таких как сумма кредита
+        if (debtSumField.getValue() > debtOffersField.getValue().getLimit()) {
+            debtSumField.setValue(debtOffersField.getValue().getLimit());
+        }
+        debtSumSlider.setValue(debtSumField.getValue());
+        //ниже код: мы заполняем поля подсчета ежемесячных выплат
+        if (!debtSumField.isEmpty() && !debtOffersField.isEmpty() && !paymentScheduleField.isEmpty()) {
+            monthPayment = Maths.getPayment(debtSumField.getValue(), debtOffersField.getValue().getInterestRate(), paymentScheduleField.getValue());
+            monthInterestPayment = Maths.getInterestPayment(debtOffersField.getValue().getInterestRate(), debtSumField.getValue());
+            monthDebtPayment = monthPayment - monthInterestPayment;
+            paymentSumField.setValue(monthPayment);
+            bodySumField.setValue(monthDebtPayment);
+            interestSumField.setValue(monthInterestPayment);
+        }
+    }
+
 
     @Subscribe("paymentScheduleField")
     public void onPaymentScheduleFieldValueChange(HasValue.ValueChangeEvent<Integer> event) { // и срока кредита
-        if (!(debtSumField.getValue() > debtOffersField.getValue().getLimit())) {
-            if (!debtSumField.isEmpty() && !debtOffersField.isEmpty() && !paymentScheduleField.isEmpty()) {
-                monthPayment = Maths.getPayment(debtSumField.getValue(), debtOffersField.getValue().getInterestRate(), paymentScheduleField.getValue());
-                monthInterestPayment = Maths.getInterestPayment(debtOffersField.getValue().getInterestRate(), debtSumField.getValue());
-                monthDebtPayment = monthPayment - monthInterestPayment;
-                paymentSumField.setValue(monthPayment);
-                bodySumField.setValue(monthDebtPayment);
-                interestSumField.setValue(monthInterestPayment);
-            }
-        }
-        else
-        {
-            //todo здесь бы алерт возвращать, пока не знаю как
+        if (!debtSumField.isEmpty() && !debtOffersField.isEmpty() && !paymentScheduleField.isEmpty()) {
+            monthPayment = Maths.getPayment(debtSumField.getValue(), debtOffersField.getValue().getInterestRate(), paymentScheduleField.getValue());
+            monthInterestPayment = Maths.getInterestPayment(debtOffersField.getValue().getInterestRate(), debtSumField.getValue());
+            monthDebtPayment = monthPayment - monthInterestPayment;
+            paymentSumField.setValue(monthPayment);
+            bodySumField.setValue(monthDebtPayment);
+            interestSumField.setValue(monthInterestPayment);
         }
     }
 
-    @Subscribe("debtOffersField") //todo ? можно конечно еще дату вставлять, но там чет совсем плохо с форматом dd-mm-yyyy (аж 4 строчки)
+    @Subscribe("debtOffersField")
     public void onDebtOffersFieldValueChange(HasValue.ValueChangeEvent<Debt> event) {//автозаполнение полей красоты ради
-        if (debtOffersField.getValue().getLimit()>500000.0) {
-            debtSumField.setValue(500000.0);
-            paymentScheduleField.setValue(24);
+        debtSumSlider.setMax(debtOffersField.getValue().getLimit());
+        if (debtSumField.isEmpty() && paymentScheduleField.isEmpty()) {
+            if (debtOffersField.getValue().getLimit() > 500000.0) {
+                debtSumField.setValue(500000.0);
+                debtSumSlider.setValue(500000.0);
+                paymentScheduleField.setValue(24);
+            } else {
+                debtSumSlider.setValue(30000.0);
+                debtSumField.setValue(30000.0);
+                paymentScheduleField.setValue(12);
+            }
         }
-        else {
-            debtSumField.setValue(30000.0);
-            paymentScheduleField.setValue(12);
+        else if(debtSumField.getValue()>debtOffersField.getValue().getLimit())
+        {
+            debtSumField.setValue(debtOffersField.getValue().getLimit()/2);
         }
     }
 }
