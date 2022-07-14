@@ -6,6 +6,17 @@
         <ModuleSettings>
           <option name="dataStoreOptions">
             <map>
+              <entry key="bank">
+                <value>
+                  <DataStoreSettings>
+                    <option name="generateDdlType" value="CREATE_AND_UPDATE" />
+                    <option name="nameLengthMode" value="POSTGRES" />
+                    <option name="supportedTypes">
+                      <option value="postgres" />
+                    </option>
+                  </DataStoreSettings>
+                </value>
+              </entry>
               <entry key="main">
                 <value>
                   <DataStoreSettings>

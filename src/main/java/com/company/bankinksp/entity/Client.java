@@ -21,8 +21,9 @@ public class Client {
     @NotNull
     private String name;
 
-    @NotNull
+
     @Column(name = "PHONE_NUMBER", nullable = false)
+    @NotNull
     private BigDecimal phoneNumber;
 
     @Column(name = "EMAIL", nullable = false)

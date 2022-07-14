@@ -5,11 +5,5 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="1" author="bankink-sp">
-        <addColumn tableName="CLIENT">
-            <column name="PHONE_NUMBER" type="DECIMAL"/>
-        </addColumn>
-
-        <addNotNullConstraint columnName="PHONE_NUMBER" defaultNullValue="0" tableName="CLIENT"/>
-    </changeSet>
+    <includeAll path="/com/company/bankinksp/liquibase/bank-changelog"/>
 </databaseChangeLog>
