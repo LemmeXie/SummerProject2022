@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <changeSet id="1" author="bankink-sp">
+        <insert tableName="CLIENT">
+            <column name="ID">f8a58f63-92ff-d417-3b2d-ac5c75851337</column>
+            <column name="NAME">John Johnson</column>
+            <column name="PHONE_NUMBER">89123456789</column>
+            <column name="EMAIL">John1@email.com</column>
+            <column name="PASSPORT_NUMBER">1234 567890</column>
+        </insert>
+    </changeSet>
+    <changeSet id="2" author="bankink-sp">
+        <insert tableName="CLIENT">
+            <column name="ID">f8a58f63-92ff-d417-3b2d-ac5c75854678</column>
+            <column name="NAME">John Johnsonson</column>
+            <column name="PHONE_NUMBER">89321456789</column>
+            <column name="EMAIL">John2@email.com</column>
+            <column name="PASSPORT_NUMBER">1324 567890</column>
+        </insert>
+    </changeSet>
+    <changeSet id="3" author="bankink-sp">
+        <insert tableName="CLIENT">
+            <column name="ID">f8a58f63-92ff-d417-3b2d-ac5c75857088</column>
+            <column name="NAME">John Johnsonsonson</column>
+            <column name="PHONE_NUMBER">89213456789</column>
+            <column name="EMAIL">John3@email.com</column>
+            <column name="PASSPORT_NUMBER">1434 567890</column>
+        </insert>
+    </changeSet>
+    <changeSet id="4" author="bankink-sp">
+        <insert tableName="DEBT">
+            <column name="ID">8c4ea72a-fa49-c8c9-501e-6e319c571322</column>
+            <column name="INTEREST_RATE">10</column>
+            <column name="LIMIT_">1000000</column>
+        </insert>
+    </changeSet>
+    <changeSet id="5" author="bankink-sp">
+        <insert tableName="DEBT">
+            <column name="ID">8c4ea72a-fa49-c8c9-501e-6e319c567891</column>
+            <column name="INTEREST_RATE">13</column>
+            <column name="LIMIT_">100000</column>
+        </insert>
+    </changeSet>
+    <changeSet id="6" author="bankink-sp">
+        <insert tableName="DEBT_OFFER">
+            <column name="ID">0062e27e-573f-59e5-a3c9-bb9b9ec12354</column>
+            <column name="CLIENT_OFFERS_ID">f8a58f63-92ff-d417-3b2d-ac5c75851337</column>
+            <column name="DEBT_OFFERS_ID">8c4ea72a-fa49-c8c9-501e-6e319c571322</column>
+            <column name="DEBT_SUM">300000</column>
+            <column name="PAYMENT_SCHEDULE">24</column>
+            <column name="DATE_PAYMENT">27.07.2022</column>
+            <column name="PAYMENT_SUM">13843.478</column>
+            <column name="BODY_SUM">11343.478</column>
+            <column name="INTEREST_SUM">2500</column>
+            <column name="VERSION">1</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7" author="bankink-sp">
+        <insert tableName="DEBT_OFFER">
+            <column name="ID">0062e27e-573f-59e5-a3c9-bb9b9ec64536</column>
+            <column name="CLIENT_OFFERS_ID">f8a58f63-92ff-d417-3b2d-ac5c75854678</column>
+            <column name="DEBT_OFFERS_ID">8c4ea72a-fa49-c8c9-501e-6e319c571322</column>
+            <column name="DEBT_SUM">600000</column>
+            <column name="PAYMENT_SCHEDULE">24</column>
+            <column name="DATE_PAYMENT">27.07.2022</column>
+            <column name="PAYMENT_SUM">27686.956</column>
+            <column name="BODY_SUM">22686.956</column>
+            <column name="INTEREST_SUM">5000</column>
+            <column name="VERSION">1</column>
+        </insert>
+    </changeSet>
+    <changeSet id="8" author="bankink-sp">
+        <insert tableName="DEBT_OFFER">
+            <column name="ID">0062e27e-573f-59e5-a3c9-bb9b9ec81234</column>
+            <column name="CLIENT_OFFERS_ID">f8a58f63-92ff-d417-3b2d-ac5c75857088</column>
+            <column name="DEBT_OFFERS_ID">8c4ea72a-fa49-c8c9-501e-6e319c567891</column>
+            <column name="DEBT_SUM">70000</column>
+            <column name="PAYMENT_SCHEDULE">12</column>
+            <column name="DATE_PAYMENT">27.07.2022</column>
+            <column name="PAYMENT_SUM">6252.209</column>
+            <column name="BODY_SUM">5493.876</column>
+            <column name="INTEREST_SUM">758.333</column>
+            <column name="VERSION">1</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

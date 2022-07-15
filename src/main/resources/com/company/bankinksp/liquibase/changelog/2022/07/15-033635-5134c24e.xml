@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="bankink-sp">
+        <createTable tableName="BANK">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BANK"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="bankink-sp">
+        <createTable tableName="CLIENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CLIENT"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PHONE_NUMBER" type="DECIMAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PASSPORT_NUMBER" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BANK_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="bankink-sp">
+        <createTable tableName="DEBT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_DEBT"/>
+            </column>
+            <column name="LIMIT_" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INTEREST_RATE" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BANK_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="bankink-sp">
+        <createTable tableName="DEBT_OFFER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_DEBT_OFFER"/>
+            </column>
+            <column name="CLIENT_OFFERS_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DEBT_OFFERS_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DEBT_SUM" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PAYMENT_SCHEDULE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DATE_PAYMENT" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PAYMENT_SUM" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BODY_SUM" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INTEREST_SUM" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="bankink-sp">
+        <createIndex indexName="IDX_CLIENT_BANK_ID" tableName="CLIENT">
+            <column name="BANK_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="BANK_ID" baseTableName="CLIENT" constraintName="FK_CLIENT_ON_BANK"
+                                 referencedColumnNames="ID" referencedTableName="BANK"/>
+    </changeSet>
+    <changeSet id="6" author="bankink-sp">
+        <createIndex indexName="IDX_DEBTOFFER" tableName="DEBT_OFFER">
+            <column name="CLIENT_OFFERS_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CLIENT_OFFERS_ID" baseTableName="DEBT_OFFER"
+                                 constraintName="FK_DEBT_OFFER_ON_CLIENT_OFFERS" referencedColumnNames="ID"
+                                 referencedTableName="CLIENT"/>
+    </changeSet>
+    <changeSet id="7" author="bankink-sp">
+        <createIndex indexName="IDX_DEBTOFFER_DEBT_OFFERS_ID" tableName="DEBT_OFFER">
+            <column name="DEBT_OFFERS_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="DEBT_OFFERS_ID" baseTableName="DEBT_OFFER"
+                                 constraintName="FK_DEBT_OFFER_ON_DEBT_OFFERS" referencedColumnNames="ID"
+                                 referencedTableName="DEBT"/>
+    </changeSet>
+    <changeSet id="8" author="bankink-sp">
+        <createIndex indexName="IDX_DEBT_BANK_ID" tableName="DEBT">
+            <column name="BANK_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="BANK_ID" baseTableName="DEBT" constraintName="FK_DEBT_ON_BANK"
+                                 referencedColumnNames="ID" referencedTableName="BANK"/>
+    </changeSet>
+</databaseChangeLog>

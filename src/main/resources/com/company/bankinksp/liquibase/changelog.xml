@@ -11,5 +11,6 @@
     <property name="uuid.type" dbms="!oracle" value="uuid"/>
 
     <includeAll path="/com/company/bankinksp/liquibase/changelog"/>
+    <includeAll path="/com/company/bankinksp/liquibase/bank-changelog"/>
 
 </databaseChangeLog>
